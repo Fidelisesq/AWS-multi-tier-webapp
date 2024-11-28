@@ -1,15 +1,16 @@
-Building a Scalable Multi-Tier Web Application on AWS
+![architecture diagram](https://github.com/Fidelisesq/AWS-multi-tier-webapp/blob/awsliftandshift/Architecture%20Diagram.pdf)
+# Building a Scalable Multi-Tier Web Application on AWS
 
 Goal: Designed for scalability and high availability, this application uses an autoscaling group of EC2 instances to serve web requests, with a dedicated backend infrastructure for queue management, database storage, and caching. 
 
-Requirements
+## Requirements
 Before diving into the implementation, let’s start with the requirements:
 
 Web Application Server: Hosted on Tomcat 10, listening on port 8080 on EC2 instances.
 Web Application Source Code: Build one or fork from github. Also, all the EC2 userdata scripts are in the GitHub repository to reduce the length of this post.
 Load Balancing and Autoscaling: Application Load Balancer (ALB) in front of an EC2 Autoscaling Group to handle web traffic.
 
-Backend Servers:
+### Backend Servers:
 RabbitMQ for message queuing services.
 MySQL for user data and web app credentials.
 Memcached for caching content to improve performance.
@@ -17,14 +18,14 @@ Domain and SSL: A custom domain with HTTPS enabled using AWS Certificate Manager
 DNS Management: Route 53 to manage DNS for both public and private traffic.
 AWS CLI & Maven: AWS CLI to interact with AWS environment & Maven to build code
 
-Architecture Design
+### Architecture Design
 This is a classic three-tier architecture:
 
 Presentation Layer (Web App Frontend): Autoscaling EC2 instances running Tomcat.
 Application Layer (Service Backend): Consists of RabbitMQ, MySQL, and Memcached instances.
 Data Layer (Database and Caching): MySQL for persistence and Memcached for caching.
 
-Implementation Steps
+### Implementation Steps
 1. Creating Key Pairs and Security Groups
 Key Pair: Create a key pair to access all EC2 instances via SSH.
 Security Groups: Configured three security groups:
@@ -110,7 +111,7 @@ Autoscaling Policies: Set up scaling policies to adjust the number of EC2 instan
 Monitoring and Logging: Enabled CloudWatch metrics to monitor CPU and request metrics, triggering autoscaling when defined thresholds were met.
 webapp running and reachable on https
 
-How the Web Application Works
+### How the Web Application Works
 User Access: Users access the application via the custom domain. The ALB handles the HTTPS requests and forwards them to Tomcat servers running in the autoscaling group.
 Backend Processing: When a web request involves queuing or caching, the application server communicates with RabbitMQ and Memcached instances. For user data requests, it connects to MySQL.
 Scaling and Availability: The autoscaling group dynamically adjusts based on load, ensuring efficient handling of fluctuating traffic.
