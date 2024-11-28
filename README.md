@@ -1,6 +1,5 @@
-![architecture diagram](https://github.com/Fidelisesq/AWS-multi-tier-webapp/blob/awsliftandshift/Architecture%20Diagram.pdf)
 # Building a Scalable Multi-Tier Web Application on AWS
-
+![architecture diagram](https://github.com/Fidelisesq/AWS-multi-tier-webapp/blob/awsliftandshift/Architecture%20Diagram.pdf)
 Goal: Designed for scalability and high availability, this application uses an autoscaling group of EC2 instances to serve web requests, with a dedicated backend infrastructure for queue management, database storage, and caching. 
 
 ## Requirements
